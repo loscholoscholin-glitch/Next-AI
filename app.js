@@ -1,63 +1,68 @@
-/**
- * Nexy AI — App Bootstrapper
- * Wires every module together, decides which screen to show, and owns the
- * top-level enter/exit transitions between the auth screens and the app shell.
- */
-const App = (() => {
-  function init() {
-    Logger.info("Nexy AI iniciando…");
+// js/app.js - Módulo de Conexión a Puter
 
-    // Global safety net: never let an uncaught error freeze the UI silently.
-    window.addEventListener("error", (e) => {
-      Logger.error("Error no capturado:", e.error || e.message);
-    });
-    window.addEventListener("unhandledrejection", (e) => {
-      Logger.error("Promesa rechazada sin manejar:", e.reason);
-    });
+document.addEventListener("DOMContentLoaded", () => {
+    const loginBtn = document.getElementById("login-puter-btn");
+    const authRoot = document.getElementById("auth-root");
+    const appRoot = document.getElementById("app-root");
 
-    ModalUI.init();
-    AuthUI.init();
-    ChatUI.init();
-    SettingsUI.init();
-
-    if (SessionService.isAuthenticated()) {
-      enterApp();
-    } else {
-      showAuthScreen();
+    // 1. Verificar si Puter está cargado en el navegador
+    if (typeof puter === 'undefined') {
+        console.error("❌ El SDK de Puter no se ha cargado. Verifica tu conexión a internet o el script en el HTML.");
+        alert("No se pudo cargar el motor de Puter. Revisa tu conexión.");
+        return;
     }
 
-    AiUsagePanel.start();
-  }
+    console.log("⚡ Puter SDK detectado con éxito.");
 
-  function showAuthScreen() {
-    document.getElementById("auth-root").hidden = false;
-    document.getElementById("app-root").hidden = true;
-    AuthUI.switchTo("login");
-  }
+    // 2. Comprobar si el usuario ya inició sesión previamente
+    if (puter.auth.isSignedIn()) {
+        console.log("¡Sesión activa detectada!");
+        mostrarApp();
+    } else {
+        console.log("Usuario no autenticado. Esperando interacción...");
+    }
 
-  function enterApp() {
-    document.getElementById("auth-root").hidden = true;
-    document.getElementById("app-root").hidden = false;
-    refreshSidebarUser();
-    ChatUI.loadForCurrentUser();
-  }
+    // 3. Evento para conectar con Puter al hacer clic
+    if (loginBtn) {
+        loginBtn.addEventListener("click", async () => {
+            loginBtn.disabled = true;
+            const originalLabel = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<span class="btn-label">Conectando...</span>';
 
-  function refreshSidebarUser() {
-    const acc = AccountService.getCurrent();
-    if (!acc) return;
-    document.getElementById("sidebar-username").textContent = acc.username;
-    document.getElementById("sidebar-avatar").src = acc.avatarDataUrl || "assets/img/logo-star.png";
-  }
+            try {
+                // Esto abre la ventana flotante segura de Puter
+                await puter.auth.signIn();
+                
+                if (puter.auth.isSignedIn()) {
+                    console.log("✅ Conexión exitosa con Puter.");
+                    mostrarApp();
+                } else {
+                    throw new Error("El usuario canceló la autenticación.");
+                }
+            } catch (error) {
+                console.error("❌ Error al conectar con Puter:", error);
+                alert("Error de conexión: " + error.message);
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = originalLabel;
+            }
+        });
+    }
 
-  function logout(skipConfirmToast = false) {
-    AccountService.logout();
-    document.getElementById("login-form").reset();
-    document.getElementById("register-form").reset();
-    showAuthScreen();
-    if (!skipConfirmToast) Toast.info("Sesión cerrada.");
-  }
-
-  return { init, enterApp, showAuthScreen, refreshSidebarUser, logout };
-})();
-
-document.addEventListener("DOMContentLoaded", App.init);
+    // Función para dar paso a la interfaz de Nexy AI
+    function mostrarApp() {
+        if (authRoot) authRoot.hidden = true;
+        if (appRoot) appRoot.hidden = false;
+        
+        // Obtener datos del usuario de Puter para personalizar la UI
+        puter.auth.getUser().then(user => {
+            console.log(`Bienvenido, ${user.username}`);
+            // Aquí puedes pintar el nombre o el avatar de Puter en tu chat-title o sidebar
+            const chatTitle = document.getElementById("chat-title");
+            if (chatTitle) {
+                chatTitle.textContent = `Sesión de ${user.username}`;
+            }
+        }).catch(err => {
+            console.warn("No se pudieron obtener los datos detallados del usuario:", err);
+        });
+    }
+});
