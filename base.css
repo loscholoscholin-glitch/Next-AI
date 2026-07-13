@@ -1,0 +1,65 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-0);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+button { font-family: inherit; cursor: pointer; }
+input, textarea, select { font-family: inherit; color: inherit; }
+
+::selection { background: rgba(124,107,216,0.35); }
+
+/* Scrollbars */
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: var(--radius-full); }
+*::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+[hidden] { display: none !important; }
+
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  background: transparent; border: 1px solid transparent; color: var(--text-secondary);
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast);
+}
+.icon-btn:hover { background: var(--bg-3); color: var(--text-primary); }
+.icon-muted { color: var(--text-muted); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 18px; border-radius: var(--radius-md); border: 1px solid transparent;
+  font-weight: 600; font-size: 14px; transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast), box-shadow var(--dur-fast), opacity var(--dur-fast);
+  user-select: none;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+.btn-block { width: 100%; }
+
+.btn-primary {
+  background: var(--brand-gradient); background-size: 200% 200%; color: #fff;
+  box-shadow: 0 4px 16px rgba(124,107,216,0.35);
+}
+.btn-primary:hover:not(:disabled) { background-position: 100% 0; box-shadow: 0 6px 22px rgba(124,107,216,0.5); }
+
+.btn-ghost { background: var(--bg-3); color: var(--text-primary); border-color: var(--border-subtle); }
+.btn-ghost:hover { background: var(--bg-elevated); }
+
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #d33f31; }
+
+.btn-spinner {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
+  animation: spin 0.7s linear infinite;
+}

@@ -1,0 +1,36 @@
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pop-in { from { opacity: 0; transform: scale(0.94) translateY(-4px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+@keyframes modal-in { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+@keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); } 30%, 50%, 70% { transform: translateX(-4px); } 40%, 60% { transform: translateX(4px); } }
+.shake { animation: shake var(--dur-slow) var(--ease-in-out); }
+
+/* Toasts */
+.toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 10px; }
+.toast {
+  min-width: 260px; max-width: 360px; background: var(--bg-elevated); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md); padding: 12px 14px; box-shadow: var(--shadow-md);
+  display: flex; align-items: flex-start; gap: 10px; font-size: 13px;
+  animation: toast-in var(--dur-base) var(--ease-out);
+}
+.toast.leaving { animation: toast-out var(--dur-base) var(--ease-in-out) forwards; }
+.toast-icon { font-size: 16px; flex-shrink: 0; }
+.toast.success .toast-icon { color: var(--success); }
+.toast.error .toast-icon { color: var(--danger); }
+.toast.info .toast-icon { color: var(--info); }
+.toast.warning .toast-icon { color: var(--warning); }
+.toast-msg { flex: 1; color: var(--text-primary); line-height: 1.4; }
+.toast-close { background: none; border: none; color: var(--text-muted); font-size: 14px; }
+
+@keyframes toast-in { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes toast-out { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(30px); } }
+
+/* Success checkmark burst (used on password change / account creation) */
+.success-burst {
+  width: 64px; height: 64px; border-radius: 50%; background: rgba(52,199,123,0.15);
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;
+  animation: burst-pop var(--dur-slow) var(--ease-out);
+}
+.success-burst::after { content: "✓"; color: var(--success); font-size: 30px; font-weight: 900; }
+@keyframes burst-pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }

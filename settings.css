@@ -1,0 +1,20 @@
+.usage-bar-track { height: 8px; border-radius: var(--radius-full); background: var(--bg-1); overflow: hidden; margin-top: 6px; }
+.usage-bar-fill { height: 100%; background: var(--brand-gradient); border-radius: var(--radius-full); transition: width var(--dur-slow) var(--ease-out); }
+.usage-row { margin-bottom: 14px; }
+.usage-row-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 2px; }
+.usage-unavailable { display: flex; align-items: center; gap: 10px; padding: 14px; background: var(--bg-3); border-radius: var(--radius-md); color: var(--text-muted); font-size: 12.5px; }
+
+.thinking-option-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.thinking-option {
+  padding: 12px 10px; border-radius: var(--radius-md); background: var(--bg-3); border: 1px solid var(--border-subtle);
+  text-align: center; font-size: 12px; color: var(--text-secondary); transition: all var(--dur-fast);
+}
+.thinking-option:hover { border-color: var(--border-strong); }
+.thinking-option.active { border-color: var(--accent); background: rgba(124,107,216,0.14); color: var(--text-primary); }
+.thinking-option .t-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; color: var(--text-primary); }
+
+.danger-zone { border: 1px solid rgba(232,72,58,0.3) !important; }
+.danger-zone h3 { color: var(--danger); }
+
+.export-format-row { display: flex; gap: 8px; margin-top: 10px; }
+.export-format-row button { flex: 1; }
