@@ -1,71 +1,92 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexy AI | Pro</title>
-<link rel="icon" type="image/png" href="assets/img/logo-star-64.png">
+/* =========================================
+   NEXY AI PRO - ANIMACIONES Y EFECTOS
+   ========================================= */
 
-<link rel="stylesheet" href="css/variables.css">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/auth.css">
-<link rel="stylesheet" href="css/chat.css">
-<link rel="stylesheet" href="css/settings.css">
-<link rel="stylesheet" href="css/animations.css">
+/* 1. Marca de agua de Brahyan2021 */
+.watermark-brahyan {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  font-size: 15px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 16px;
+  border-radius: 30px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 9999;
+  cursor: default;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Rebote suave */
+  pointer-events: auto;
+}
 
-<script src="https://js.puter.com/v2/"></script>
-</head>
-<body>
+.watermark-brahyan:hover {
+  transform: scale(1.4) translateY(-10px);
+  color: #fff;
+  background: var(--brand-gradient, linear-gradient(45deg, #7c6bd8, #3b82f6));
+  box-shadow: 0 10px 25px rgba(124, 107, 216, 0.5);
+  border-color: transparent;
+}
 
-<div class="watermark-brahyan">by Brahyan2021</div>
+/* 2. Recorte de imágenes perfecto (Sin estar mal cortadas) */
+.avatar-cropped {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Esto evita que la imagen se estire */
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
 
-<div id="auth-root" class="auth-root">
-  <div class="cursor-glow" id="cursor-glow"></div>
-  
-  <div class="auth-card tilt-card" id="login-card">
-    <img src="assets/img/logo-star.png" class="auth-logo avatar-cropped" alt="Nexy AI">
-    <h1 class="auth-title">Nexy AI</h1>
-    <p class="auth-subtitle">Inicia sesión para continuar</p>
-    <button type="button" class="btn btn-primary btn-block" id="login-puter-btn">
-      <span class="btn-label">Conectar con Puter</span>
-    </button>
-  </div>
-</div>
+/* 3. Panel de cristal para el input de texto (Glassmorphism) */
+.glass-panel {
+  background: rgba(30, 30, 35, 0.65);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.3s ease, transform 0.2s ease;
+}
+.glass-panel:focus-within {
+  border-color: rgba(124, 107, 216, 0.6);
+  transform: translateY(-2px);
+}
 
-<div id="app-root" class="app-root" hidden>
-  <aside class="sidebar" id="sidebar">
-      </aside>
+/* 4. Efecto de luz que sigue al cursor */
+.cursor-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(124,107,216,0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
 
-  <main class="chat-main">
-    <header class="chat-topbar glass-header">
-      <div class="topbar-title" id="chat-title">Nueva conversación</div>
-    </header>
+/* 5. Interfaz flotante 3D */
+.tilt-card {
+  transform: perspective(1000px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+  transition: transform 0.1s ease-out;
+}
 
-    <div class="messages scroll-smooth" id="messages">
-      </div>
-
-    <div class="composer-wrapper">
-      <div id="attachment-preview-container" class="attachment-preview-container" hidden>
-         </div>
-      <form class="composer glass-panel" id="composer">
-        <button type="button" class="icon-btn composer-attach" id="attach-btn" title="Adjuntar imagen o archivo">
-          📎
-        </button>
-        <input type="file" id="file-upload" accept="image/*,.pdf,.txt" hidden multiple>
-        
-        <textarea id="composer-input" placeholder="Escribe un mensaje o pega una imagen (Ctrl+V)…" rows="1"></textarea>
-        
-        <button type="submit" class="composer-send" id="composer-send" title="Enviar (Ctrl + Enter)">➤</button>
-      </form>
-    </div>
-  </main>
-</div>
-
-<script src="js/core/utils.js"></script>
-<script src="js/core/storage.js"></script>
-<script src="js/core/eventBus.js"></script>
-<script src="js/interactions.js"></script> <script src="js/app.js"></script>
-</body>
-</html>
+/* 6. Previsualización de adjuntos */
+.attachment-preview-container {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+.img-preview-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--border-strong);
+  animation: pop-in 0.3s ease-out;
+}
