@@ -3,240 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexy AI | Pro</title>
+<link rel="icon" type="image/png" href="assets/img/logo-star-64.png">
 
-<title>Nexy AI</title>
-
-<link rel="icon" type="image/png" href="./assets/img/logo-star-64.png">
-
-<link rel="stylesheet" href="./css/variables.css">
-<link rel="stylesheet" href="./css/base.css">
-<link rel="stylesheet" href="./css/layout.css">
-<link rel="stylesheet" href="./css/components.css">
-<link rel="stylesheet" href="./css/auth.css">
-<link rel="stylesheet" href="./css/chat.css">
-<link rel="stylesheet" href="./css/settings.css">
-<link rel="stylesheet" href="./css/animations.css">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/chat.css">
+<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/animations.css">
 
 <script src="https://js.puter.com/v2/"></script>
 </head>
 <body>
 
-<!-- ===================== AUTH SCREENS ===================== -->
-<div id="auth-root" class="auth-root">
-  <div class="auth-bg-glow"></div>
+<div class="watermark-brahyan">by Brahyan2021</div>
 
-  <div class="auth-card" id="login-card">
-    <img src="assets/img/logo-star.png" class="auth-logo" alt="Nexy AI">
+<div id="auth-root" class="auth-root">
+  <div class="cursor-glow" id="cursor-glow"></div>
+  
+  <div class="auth-card tilt-card" id="login-card">
+    <img src="assets/img/logo-star.png" class="auth-logo avatar-cropped" alt="Nexy AI">
     <h1 class="auth-title">Nexy AI</h1>
     <p class="auth-subtitle">Inicia sesión para continuar</p>
-
-    <form id="login-form" class="auth-form" novalidate>
-      <div class="field">
-        <label for="login-username">Usuario</label>
-        <input id="login-username" type="text" autocomplete="username" placeholder="tu usuario" />
-        <span class="field-error" id="login-username-error"></span>
-      </div>
-      <div class="field">
-        <label for="login-password">Contraseña</label>
-        <div class="password-wrap">
-          <input id="login-password" type="password" autocomplete="current-password" placeholder="••••••••" />
-          <button type="button" class="toggle-visibility" data-target="login-password" aria-label="Mostrar contraseña">👁</button>
-        </div>
-        <span class="field-error" id="login-password-error"></span>
-      </div>
-      <button type="submit" class="btn btn-primary btn-block" id="login-submit">
-        <span class="btn-label">Ingresar</span>
-        <span class="btn-spinner" hidden></span>
-      </button>
-      <div class="form-banner" id="login-banner" hidden></div>
-    </form>
-
-    <div class="auth-switch">
-      ¿No tienes cuenta? <a href="#" id="go-to-register">Regístrate</a>
-    </div>
-  </div>
-
-  <div class="auth-card" id="register-card" hidden>
-    <img src="assets/img/logo-star.png" class="auth-logo" alt="Nexy AI">
-    <h1 class="auth-title">Crear cuenta</h1>
-    <p class="auth-subtitle">Comienza tu experiencia con Nexy AI</p>
-
-    <form id="register-form" class="auth-form" novalidate>
-      <div class="field">
-        <label for="register-username">Usuario</label>
-        <input id="register-username" type="text" autocomplete="username" placeholder="Elige un usuario" />
-        <span class="field-error" id="register-username-error"></span>
-      </div>
-      <div class="field">
-        <label for="register-password">Contraseña</label>
-        <div class="password-wrap">
-          <input id="register-password" type="password" autocomplete="new-password" placeholder="Crea una contraseña" />
-          <button type="button" class="toggle-visibility" data-target="register-password" aria-label="Mostrar contraseña">👁</button>
-        </div>
-        <div class="strength-meter" id="strength-meter">
-          <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
-          <span class="strength-label" id="strength-label">&nbsp;</span>
-        </div>
-        <ul class="password-rules" id="password-rules">
-          <li data-rule="length">Mínimo 8 caracteres</li>
-          <li data-rule="upper">Una letra mayúscula</li>
-          <li data-rule="lower">Una letra minúscula</li>
-          <li data-rule="number">Un número</li>
-          <li data-rule="special">Un carácter especial</li>
-        </ul>
-        <span class="field-error" id="register-password-error"></span>
-      </div>
-      <div class="field">
-        <label for="register-confirm">Confirmar contraseña</label>
-        <input id="register-confirm" type="password" autocomplete="new-password" placeholder="Repite la contraseña" />
-        <span class="field-error" id="register-confirm-error"></span>
-      </div>
-      <button type="submit" class="btn btn-primary btn-block" id="register-submit">
-        <span class="btn-label">Crear cuenta</span>
-        <span class="btn-spinner" hidden></span>
-      </button>
-      <div class="form-banner" id="register-banner" hidden></div>
-    </form>
-
-    <div class="auth-switch">
-      ¿Ya tienes cuenta? <a href="#" id="go-to-login">Inicia sesión</a>
-    </div>
+    <button type="button" class="btn btn-primary btn-block" id="login-puter-btn">
+      <span class="btn-label">Conectar con Puter</span>
+    </button>
   </div>
 </div>
 
-<!-- ===================== APP SHELL ===================== -->
 <div id="app-root" class="app-root" hidden>
-
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <img src="assets/img/logo-star.png" class="brand-logo" alt="Nexy AI">
-      <span class="brand-name">Nexy AI</span>
-      <button class="icon-btn sidebar-collapse" id="sidebar-collapse" title="Colapsar barra lateral">«</button>
-    </div>
-
-    <button class="btn btn-primary btn-block new-chat-btn" id="new-chat-btn">
-      <span>+ Nuevo chat</span>
-    </button>
-
-    <div class="sidebar-search">
-      <input type="text" id="chat-search" placeholder="Buscar chats..." />
-    </div>
-
-    <div class="sidebar-filters">
-      <button class="chip active" data-filter="all">Todos</button>
-      <button class="chip" data-filter="pinned">Fijados</button>
-      <button class="chip" data-filter="favorite">Favoritos</button>
-      <button class="chip" data-filter="archived">Archivados</button>
-    </div>
-
-    <nav class="chat-list" id="chat-list" aria-label="Lista de chats"></nav>
-
-    <div class="sidebar-footer">
-      <button class="user-chip" id="open-settings-btn">
-        <img id="sidebar-avatar" class="user-avatar" src="assets/img/logo-star.png" alt="avatar">
-        <span class="user-name" id="sidebar-username">usuario</span>
-        <span class="icon-muted">⚙</span>
-      </button>
-    </div>
-  </aside>
+      </aside>
 
   <main class="chat-main">
-    <header class="chat-topbar">
-      <button class="icon-btn mobile-only" id="mobile-menu-btn">☰</button>
+    <header class="chat-topbar glass-header">
       <div class="topbar-title" id="chat-title">Nueva conversación</div>
-      <div class="topbar-actions">
-        <div class="connection-badge" id="connection-badge">
-          <span class="dot"></span><span class="conn-label">Conectando…</span>
-        </div>
-        <select class="model-select" id="model-select"></select>
-        <div class="thinking-select-wrap" title="Nivel de razonamiento">
-          <select class="thinking-select" id="thinking-select">
-            <option value="low">🧠 Bajo</option>
-            <option value="medium" selected>🧠 Medio</option>
-            <option value="high">🧠 Alto</option>
-            <option value="ultra">🧠 Ultra</option>
-          </select>
-        </div>
-      </div>
     </header>
 
-    <div class="messages" id="messages">
-      <div class="empty-state" id="chat-empty-state">
-        <img src="assets/img/logo-star.png" class="empty-logo" alt="Nexy AI">
-        <h2>¿En qué puedo ayudarte hoy?</h2>
-        <p>Escribe un mensaje para comenzar una conversación con Nexy AI.</p>
+    <div class="messages scroll-smooth" id="messages">
       </div>
-    </div>
 
-    <form class="composer" id="composer">
-      <textarea id="composer-input" placeholder="Escribe un mensaje…" rows="1"></textarea>
-      <button type="submit" class="composer-send" id="composer-send" title="Enviar">➤</button>
-    </form>
-    <div class="composer-hint">Nexy AI puede cometer errores. Verifica la información importante.</div>
+    <div class="composer-wrapper">
+      <div id="attachment-preview-container" class="attachment-preview-container" hidden>
+         </div>
+      <form class="composer glass-panel" id="composer">
+        <button type="button" class="icon-btn composer-attach" id="attach-btn" title="Adjuntar imagen o archivo">
+          📎
+        </button>
+        <input type="file" id="file-upload" accept="image/*,.pdf,.txt" hidden multiple>
+        
+        <textarea id="composer-input" placeholder="Escribe un mensaje o pega una imagen (Ctrl+V)…" rows="1"></textarea>
+        
+        <button type="submit" class="composer-send" id="composer-send" title="Enviar (Ctrl + Enter)">➤</button>
+      </form>
+    </div>
   </main>
 </div>
 
-<!-- ===================== SETTINGS MODAL ===================== -->
-<div id="settings-overlay" class="modal-overlay" hidden>
-  <div class="modal settings-modal">
-    <div class="settings-nav">
-      <img src="assets/img/logo-star.png" class="settings-logo" alt="Nexy AI">
-      <button class="settings-nav-item active" data-panel="profile">👤 Perfil</button>
-      <button class="settings-nav-item" data-panel="security">🔒 Seguridad</button>
-      <button class="settings-nav-item" data-panel="privacy">🛡 Privacidad</button>
-      <button class="settings-nav-item" data-panel="storage">💾 Almacenamiento</button>
-      <button class="settings-nav-item" data-panel="sessions">🖥 Sesiones</button>
-      <button class="settings-nav-item" data-panel="ai-usage">📊 Uso de IA</button>
-      <button class="settings-nav-item" data-panel="api-keys">🔑 Claves API</button>
-      <button class="settings-nav-item" data-panel="interface">🎨 Interfaz</button>
-      <button class="settings-nav-item danger" data-panel="account-actions">⚠ Cuenta</button>
-      <div class="settings-nav-spacer"></div>
-      <button class="settings-close" id="settings-close">✕ Cerrar</button>
-    </div>
-
-    <div class="settings-content" id="settings-content">
-      <!-- Panels injected by JS -->
-    </div>
-  </div>
-</div>
-
-<!-- ===================== CONFIRM DIALOG ===================== -->
-<div id="confirm-overlay" class="modal-overlay" hidden>
-  <div class="modal confirm-modal">
-    <h3 id="confirm-title">¿Estás seguro?</h3>
-    <p id="confirm-message"></p>
-    <div class="field" id="confirm-password-field" hidden>
-      <label for="confirm-password-input">Confirma tu contraseña</label>
-      <input id="confirm-password-input" type="password" placeholder="••••••••" />
-    </div>
-    <div class="confirm-actions">
-      <button class="btn btn-ghost" id="confirm-cancel">Cancelar</button>
-      <button class="btn btn-danger" id="confirm-accept">Confirmar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===================== TOASTS ===================== -->
-<div id="toast-container" class="toast-container" aria-live="polite"></div>
-
-<!-- ===================== SCRIPTS ===================== -->
 <script src="js/core/utils.js"></script>
 <script src="js/core/storage.js"></script>
 <script src="js/core/eventBus.js"></script>
-<script src="js/core/logger.js"></script>
-<script src="js/services/crypto.js"></script>
-<script src="js/services/validation.js"></script>
-<script src="js/services/accountService.js"></script>
-<script src="js/services/sessionService.js"></script>
-<script src="js/services/chatService.js"></script>
-<script src="js/services/aiService.js"></script>
-<script src="js/services/apiKeyService.js"></script>
-<script src="js/ui/toast.js"></script>
-<script src="js/ui/modal.js"></script>
-<script src="js/features/auth/authUI.js"></script>
-<script src="js/features/chat/chatUI.js"></script>
-<script src="js/features/settings/settingsUI.js"></script>
-<script src="js/features/ai/aiUsagePanel.js"></script>
-<script src="js/app.js"></script>
+<script src="js/interactions.js"></script> <script src="js/app.js"></script>
 </body>
 </html>
