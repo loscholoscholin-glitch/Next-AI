@@ -1,25 +1,37 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexy AI | Pro</title>
-<link rel="icon" type="image/png" href="assets/img/logo-star-64.png">
-
-<link rel="stylesheet" href="css/variables.css">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/auth.css">
-<link rel="stylesheet" href="css/chat.css">
-<link rel="stylesheet" href="css/settings.css">
-<link rel="stylesheet" href="css/animations.css">
-
-<script src="https://js.puter.com/v2/"></script>
-</head>
-<body>
+    <div id="app-view" class="app-view" hidden>
+      <aside id="sidebar" class="sidebar" aria-label="Conversaciones">
+        <div class="sidebar-top">
+          <a class="brand" href="#" aria-label="Nexy AI, nueva conversación">
+            <span class="brand-orb"><span>✦</span></span><span>Nexy <strong>AI</strong></span>
+          </a>
+          <button id="collapse-sidebar" class="icon-button mobile-only" type="button" aria-label="Cerrar historial">×</button>
+        </div>
+        <button id="new-chat-button" class="new-chat-button" type="button"><span>＋</span> Nueva conversación <kbd>Ctrl N</kbd></button>
+        <button id="command-button" class="search-button" type="button"><span>⌕</span> Buscar conversaciones <kbd>Ctrl K</kbd></button>
+        <nav id="conversation-list" class="conversation-list" aria-label="Historial de conversaciones"></nav>
+        <div class="sidebar-bottom">
+          <button id="theme-button" class="utility-button" type="button"><span>◐</span><span>Alternar tema</span></button>
+          <div class="profile-card">
+            <span id="profile-avatar" class="avatar" aria-hidden="true">N</span>
+            <div><strong id="profile-name">Nexy</strong><small>Sincronizado con Puter</small></div>
+            <button id="sign-out-button" class="icon-button" type="button" aria-label="Cerrar sesión" title="Cerrar sesión">↪</button>
+          </div>
+        </div>
+      </aside>
 
 <div class="watermark-brahyan">by Brahyan2021</div>
+      <section class="workspace">
+        <header class="topbar glass">
+          <button id="open-sidebar" class="icon-button mobile-toggle" type="button" aria-label="Abrir historial">☰</button>
+          <div class="conversation-heading">
+            <span class="status-dot" aria-hidden="true"></span>
+            <div><p>NEXY AI</p><h2 id="conversation-title">Nueva conversación</h2></div>
+          </div>
+          <div class="topbar-actions">
+            <button id="clear-chat-button" class="icon-button" type="button" aria-label="Limpiar conversación" title="Limpiar conversación">⌫</button>
+            <button id="more-button" class="icon-button" type="button" aria-label="Abrir atajos" title="Atajos y comandos">⋯</button>
+          </div>
+        </header>
 
 <div id="auth-root" class="auth-root">
   <div class="cursor-glow" id="cursor-glow"></div>
@@ -33,10 +45,28 @@
     </button>
   </div>
 </div>
+        <section id="messages" class="messages" aria-live="polite" aria-label="Mensajes de la conversación"></section>
 
 <div id="app-root" class="app-root" hidden>
   <aside class="sidebar" id="sidebar">
       </aside>
+        <section class="composer-area">
+          <div id="attachment-tray" class="attachment-tray" hidden aria-label="Adjuntos pendientes"></div>
+          <form id="composer" class="composer glass" novalidate>
+            <input id="file-input" type="file" multiple hidden />
+            <input id="folder-input" type="file" webkitdirectory directory multiple hidden />
+            <button id="attach-file-button" class="composer-action" type="button" aria-label="Adjuntar archivos" title="Adjuntar archivos">⌇</button>
+            <button id="attach-folder-button" class="composer-action" type="button" aria-label="Adjuntar carpeta" title="Adjuntar carpeta">▣</button>
+            <div class="input-wrap">
+              <textarea id="prompt-input" rows="1" maxlength="12000" placeholder="Pregunta algo o adjunta archivos…" aria-label="Mensaje"></textarea>
+              <span class="composer-hint"><kbd>Ctrl</kbd> <kbd>Enter</kbd> para enviar</span>
+            </div>
+            <button id="send-button" class="send-button" type="submit" aria-label="Enviar mensaje"><span>↑</span></button>
+          </form>
+          <p class="privacy-note">Tus conversaciones se guardan en tu espacio privado de Puter. <button id="shortcut-link" type="button">Ver atajos</button></p>
+        </section>
+      </section>
+    </div>
 
   <main class="chat-main">
     <header class="chat-topbar glass-header">
@@ -45,6 +75,7 @@
 
     <div class="messages scroll-smooth" id="messages">
       </div>
+    <button id="credit" class="credit" type="button" aria-label="Créditos de Brahyan2021">by Brahyan2021</button>
 
     <div class="composer-wrapper">
       <div id="attachment-preview-container" class="attachment-preview-container" hidden>
@@ -58,6 +89,11 @@
         <textarea id="composer-input" placeholder="Escribe un mensaje o pega una imagen (Ctrl+V)…" rows="1"></textarea>
         
         <button type="submit" class="composer-send" id="composer-send" title="Enviar (Ctrl + Enter)">➤</button>
+    <dialog id="command-palette" class="command-palette glass" aria-labelledby="command-title">
+      <form method="dialog" class="palette-content">
+        <div class="palette-title"><span>⌕</span><input id="command-search" type="search" placeholder="Buscar o ejecutar un comando…" autocomplete="off" aria-label="Buscar comando" /><kbd>Esc</kbd></div>
+        <h2 id="command-title">Comandos rápidos</h2>
+        <div id="command-list" class="command-list"></div>
       </form>
     </div>
   </main>
@@ -68,4 +104,8 @@
 <script src="js/core/eventBus.js"></script>
 <script src="js/interactions.js"></script> <script src="js/app.js"></script>
 </body>
+</html>
+    </dialog>
+    <div id="toast-region" class="toast-region" role="status" aria-live="polite"></div>
+  </body>
 </html>
